@@ -40,6 +40,17 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>ru.yandex.practicum</groupId>
+                <artifactId>avro-schemas</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.yandex.practicum</groupId>
+                <artifactId>proto-schemas</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro</artifactId>
                 <version>${avro.version}</version>
