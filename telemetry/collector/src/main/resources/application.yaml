@@ -1,14 +1,16 @@
 spring:
   application:
     name: collector
-
 logging:
   level:
     ru.yandex.practicum.telemetry: TRACE
     org:
       springframework: ERROR
       apache.kafka: WARN
-
+grpc:
+  server:
+    port: 59091
+    reflection-service-enabled: true
 collector:
   kafka:
     producer:
