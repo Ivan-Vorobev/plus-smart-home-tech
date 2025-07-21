@@ -3,7 +3,6 @@ package ru.yandex.practicum.telemetry.analyzer.configuration;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,7 +34,7 @@ public class KafkaConfig {
     }
 
     public Properties getSnapshotProperties() {
-        return this.consumer.hub.getProperties();
+        return this.consumer.snapshot.getProperties();
     }
 
     @PostConstruct

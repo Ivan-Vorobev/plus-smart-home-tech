@@ -57,6 +57,8 @@ public class EventController extends CollectorControllerGrpc.CollectorController
         try {
             if (hubEventHandlers.containsKey(request.getPayloadCase())) {
                 hubEventHandlers.get(request.getPayloadCase()).handle(request);
+                responseObserver.onNext(Empty.getDefaultInstance());
+                responseObserver.onCompleted();
             } else {
                 throw new IllegalArgumentException("Could not find hub event handler: " + request.getPayloadCase());
             }

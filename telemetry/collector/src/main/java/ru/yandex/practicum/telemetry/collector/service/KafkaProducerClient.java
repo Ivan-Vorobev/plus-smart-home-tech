@@ -31,7 +31,13 @@ public class KafkaProducerClient implements AutoCloseable {
 
         log.trace("Send data: {}, hub: {}, topic: {}", event, hubId, topicType.getTopic());
 
-        producer.send(record);
+        producer.send(record, (metadata, exception) -> {
+            if (exception == null) {
+                log.info("Message sent successfully to partition " + metadata.partition() + " with offset " + metadata.offset());
+            } else {
+                log.error("Failed to send message: " + exception.getMessage());
+            }
+        });
     }
 
     @Override
