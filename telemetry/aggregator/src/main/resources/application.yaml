@@ -8,20 +8,22 @@ logging:
     org:
       springframework: ERROR
       apache.kafka: WARN
-grpc:
-  server:
-    port: 59091
-    reflection-service-enabled: true
-collector:
+aggregator:
   kafka:
     producer:
       properties:
         bootstrap.servers: localhost:9092
-        client.id: "telemetry.collector"
+        client.id: "telemetry.aggregator"
         key.serializer: org.apache.kafka.common.serialization.StringSerializer
         value.serializer: ru.yandex.practicum.avro.serializer.AvroSerializer
-        value.deserializer: ru.yandex.practicum.avro.deserializer.SensorEventDeserialize
         linger.ms: 0
+    consumer:
+      properties:
+        client.id: "telemetry.aggregator.consumer"
+        group.id: "telemetry.aggregator.group"
+        bootstrap.servers: localhost:9092
+        key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value.deserializer: ru.yandex.practicum.avro.deserializer.SensorEventDeserialize
     topics:
       sensors-events: telemetry.sensors.v1
       hubs-events: telemetry.hubs.v1
