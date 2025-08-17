@@ -88,7 +88,11 @@ public class ShoppingStoreService {
     }
 
     private Product getProduct(UUID id) {
-        return storeRepository.findById(id)
+        Product product = storeRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product with id: " + id + " not found"));
+
+        log.info("Find product: {}", product);
+
+        return product;
     }
 }

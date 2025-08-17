@@ -131,7 +131,14 @@ public class WarehouseService {
         } else {
             quantityState = QuantityState.MANY;
         }
-        storeFeignClient.setProductQuantityState(new SetProductQuantityStateRequest(product.getProductId(), quantityState));
+
+        SetProductQuantityStateRequest payload = new SetProductQuantityStateRequest(product.getProductId(), quantityState);
+        log.info("Process updating the quantity of a product in the ShoppingStore: {}", payload);
+
+        try {
+            storeFeignClient.setProductQuantityState(payload.getProductId(), payload.getQuantityState());
+        } catch (Exception ignored) {
+        }
         log.info("Updating the quantity of a product in the ShoppingStore");
     }
 }
