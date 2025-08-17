@@ -3,11 +3,11 @@ package ru.yandex.practicum.api.shoppingStore;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.dto.shoppingStore.PageProductDto;
 import ru.yandex.practicum.dto.shoppingStore.ProductCategory;
 import ru.yandex.practicum.dto.shoppingStore.ProductDto;
 import ru.yandex.practicum.dto.shoppingStore.QuantityState;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface ShoppingStoreApi {
@@ -19,7 +19,7 @@ public interface ShoppingStoreApi {
     ProductDto findProductById(@PathVariable("productId") String productId);
 
     @GetMapping("/api/v1/shopping-store")
-    List<ProductDto> findAllByProductCategory(
+    PageProductDto findAllByProductCategory(
             @RequestParam(name = "category") ProductCategory productCategory,
             Pageable pageable);
 

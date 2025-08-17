@@ -6,13 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.api.shoppingStore.ShoppingStoreApi;
-import ru.yandex.practicum.dto.shoppingStore.ProductCategory;
-import ru.yandex.practicum.dto.shoppingStore.ProductDto;
-import ru.yandex.practicum.dto.shoppingStore.QuantityState;
-import ru.yandex.practicum.dto.shoppingStore.SetProductQuantityStateRequest;
+import ru.yandex.practicum.dto.shoppingStore.*;
 import ru.yandex.practicum.service.ShoppingStoreService;
 
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -32,7 +28,7 @@ public class ShoppingStoreController implements ShoppingStoreApi {
     }
 
     @Override
-    public List<ProductDto> findAllByProductCategory(ProductCategory productCategory, Pageable pageable) {
+    public PageProductDto findAllByProductCategory(ProductCategory productCategory, Pageable pageable) {
         return storeService.findAllByProductCategory(productCategory, pageable);
     }
 

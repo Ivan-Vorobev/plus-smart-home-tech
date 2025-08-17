@@ -2,18 +2,15 @@ package ru.yandex.practicum.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.dto.shoppingStore.ProductCategory;
-import ru.yandex.practicum.dto.shoppingStore.ProductDto;
-import ru.yandex.practicum.dto.shoppingStore.ProductState;
-import ru.yandex.practicum.dto.shoppingStore.SetProductQuantityStateRequest;
+import ru.yandex.practicum.dto.shoppingStore.*;
 import ru.yandex.practicum.exception.ProductNotFoundException;
 import ru.yandex.practicum.mapper.ShoppingStoreMapper;
 import ru.yandex.practicum.model.Product;
 import ru.yandex.practicum.repository.ShoppingStoreRepository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -39,12 +36,9 @@ public class ShoppingStoreService {
         return ShoppingStoreMapper.mapToProductDto(product);
     }
 
-    public List<ProductDto> findAllByProductCategory(ProductCategory productCategory, Pageable pageable) {
-        List<Product> products = storeRepository.findAllByProductCategory(productCategory, pageable);
-        if (products.isEmpty()) {
-            throw new ProductNotFoundException("No products found with the category: " + productCategory);
-        }
-        return ShoppingStoreMapper.mapToProductDto(products);
+    public PageProductDto findAllByProductCategory(ProductCategory productCategory, Pageable pageable) {
+        Page<Product> products = storeRepository.findAllByProductCategory(productCategory, pageable);
+        return ShoppingStoreMapper.mapToProductPageDto(products);
     }
 
     public ProductDto updateProduct(ProductDto productDto) {

@@ -1,7 +1,10 @@
 package ru.yandex.practicum.mapper;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import ru.yandex.practicum.dto.shoppingStore.PageProductDto;
 import ru.yandex.practicum.dto.shoppingStore.ProductDto;
+import ru.yandex.practicum.dto.shoppingStore.SortListDto;
 import ru.yandex.practicum.model.Product;
 
 import java.util.List;
@@ -35,5 +38,22 @@ public class ShoppingStoreMapper {
 
     public static List<ProductDto> mapToProductDto(List<Product> products) {
         return products.stream().map(ShoppingStoreMapper::mapToProductDto).toList();
+    }
+
+    public static PageProductDto mapToProductPageDto(Page<Product> products) {
+        return PageProductDto.builder()
+                .content(products.getContent().stream()
+                        .map(ShoppingStoreMapper::mapToProductDto)
+                        .toList()
+                )
+                .sort(products.getSort().stream()
+                        .map(s -> SortListDto.builder()
+                                .direction(s.getDirection().toString())
+                                .property(s.getProperty())
+                                .build()
+                        )
+                        .toList()
+                )
+                .build();
     }
 }
