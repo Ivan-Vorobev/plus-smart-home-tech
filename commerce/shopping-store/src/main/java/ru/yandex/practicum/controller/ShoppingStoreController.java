@@ -1,0 +1,54 @@
+package ru.yandex.practicum.controller;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import ru.yandex.practicum.api.shoppingStore.ShoppingStoreApi;
+import ru.yandex.practicum.dto.shoppingStore.*;
+import ru.yandex.practicum.service.ShoppingStoreService;
+
+import java.util.UUID;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+public class ShoppingStoreController implements ShoppingStoreApi {
+    private final ShoppingStoreService storeService;
+
+    @Override
+    public ProductDto createProduct(ProductDto productDto) {
+        return storeService.createProduct(productDto);
+    }
+
+    @Override
+    public ProductDto findProductById(String productId) {
+        return storeService.findProductById(productId);
+    }
+
+    @Override
+    public PageProductDto findAllByProductCategory(ProductCategory productCategory, Pageable pageable) {
+        return storeService.findAllByProductCategory(productCategory, pageable);
+    }
+
+    @Override
+    public ProductDto updateProduct(ProductDto productDto) {
+        return storeService.updateProduct(productDto);
+    }
+
+    @Override
+    public Boolean removeProductFromStore(UUID productId) {
+        return storeService.removeProductFromStore(productId);
+    }
+
+    @Override
+    public Boolean setProductQuantityState(@RequestParam UUID productId, @RequestParam QuantityState quantityState) {
+        SetProductQuantityStateRequest request = SetProductQuantityStateRequest.builder()
+                .productId(productId)
+                .quantityState(quantityState)
+                .build();
+
+        return storeService.setProductQuantityState(request);
+    }
+}
