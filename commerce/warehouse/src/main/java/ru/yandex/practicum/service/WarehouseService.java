@@ -42,6 +42,7 @@ public class WarehouseService {
     }
 
     public BookedProductsDto checkProductQuantityInWarehouse(ShoppingCartDto shoppingCartDto) {
+        log.debug("Проверка достаточного количества товаров для корзины {}", shoppingCartDto.getShoppingCartId());
         Map<UUID, Integer> productsInCart = shoppingCartDto.getProducts();
         List<WarehouseProduct> warehouseProductsList = warehouseRepository.findAllById(productsInCart.keySet());
         log.info("Products from the basket available in stock: {}", warehouseProductsList);
