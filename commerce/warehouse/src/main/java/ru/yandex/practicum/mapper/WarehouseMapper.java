@@ -1,8 +1,11 @@
 package ru.yandex.practicum.mapper;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.yandex.practicum.dto.warehouse.AssemblyProductsForOrderRequest;
+import ru.yandex.practicum.dto.warehouse.BookedProductsDto;
 import ru.yandex.practicum.dto.warehouse.DimensionDto;
 import ru.yandex.practicum.dto.warehouse.NewProductInWarehouseRequest;
+import ru.yandex.practicum.model.OrderBooking;
 import ru.yandex.practicum.model.WarehouseProduct;
 
 import java.util.UUID;
@@ -19,6 +22,16 @@ public class WarehouseMapper {
                 .depth(dimension.getDepth())
                 .weight(newProductRequest.getWeight())
                 .quantity(0)
+                .build();
+    }
+
+    public static OrderBooking mapToOrderBooking(AssemblyProductsForOrderRequest assemblyRequest, BookedProductsDto bookedDto) {
+        return OrderBooking.builder()
+                .orderId(assemblyRequest.getOrderId())
+                .products(assemblyRequest.getProducts())
+                .deliveryWeight(bookedDto.getDeliveryWeight())
+                .deliveryVolume(bookedDto.getDeliveryVolume())
+                .fragile(bookedDto.getFragile())
                 .build();
     }
 }
